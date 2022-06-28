@@ -34,6 +34,62 @@ app.post('/create-household', (req, res)=> {
 
 //Endpoint 2: Add a family member to household
 //maritalStatus: single, married, widowed, divorced
+app.post('/add-member', (req, res)=> {
+    const householdMember = req.body;
+    let insertQuery = '';
+
+    let member_name_array = '';
+    let member_gender_array = '';
+    let member_marital_status_array = '';
+    let member_spouse_array = '';
+    let member_occupation_type_array = '';
+    let member_annual_income_array = '';
+    let member_dob_array = '';
+
+    for(var member in householdMember) {
+        if(member == 0)
+        {
+            member_name_array = `'${householdMember[member]['member_name']}'`;
+            member_gender_array = `'${householdMember[member]['member_gender']}'`;
+            member_marital_status_array = `'${householdMember[member]['member_marital_status']}'`;
+            member_spouse_array = `'${householdMember[member]['member_spouse']}'`;
+            member_occupation_type_array = `'${householdMember[member]['member_occupation_type']}'`;
+            member_annual_income_array = `${householdMember[member]['member_annual_income']}`;
+            member_dob_array = `'${householdMember[member]['member_dob']}'::date`;
+        }
+        else
+        {
+            member_name_array += `, '${householdMember[member]['member_name']}'`;
+            member_gender_array += `, '${householdMember[member]['member_gender']}'`;
+            member_marital_status_array += `, '${householdMember[member]['member_marital_status']}'`;
+            member_spouse_array += `, '${householdMember[member]['member_spouse']}'`;
+            member_occupation_type_array += `, '${householdMember[member]['member_occupation_type']}'`;
+            member_annual_income_array += `, ${householdMember[member]['member_annual_income']}`;
+            member_dob_array += `, '${householdMember[member]['member_dob']}'::date`;
+        }
+    }
+
+    insertQuery = `WITH a AS (
+        SELECT id FROM household where housing_type = '${householdMember[0]['housing_type']}' 
+    ), b AS (
+        INSERT INTO household_family(household_id)
+        SELECT id
+        FROM a 
+        RETURNING id
+    )
+    INSERT INTO household_family_member(household_family_id, member_name, member_gender, member_marital_status, member_spouse, member_occupation_type, member_annual_income, member_dob)
+    SELECT id, unnest(ARRAY[${member_name_array}]), unnest(ARRAY[${member_gender_array}]), unnest(ARRAY[${member_marital_status_array}]), unnest(ARRAY[${member_spouse_array}])
+    , unnest(ARRAY[${member_occupation_type_array}]), unnest(ARRAY[${member_annual_income_array}]), unnest(ARRAY[${member_dob_array}])
+    FROM b`;
+
+    client.query(insertQuery, (err, result)=>{
+        if(!err){
+            res.send('Family member added to household successfully.')
+        }
+        else{ console.log(err.message) }
+    })
+    client.end;
+});
 
 
 
@@ -49,4 +105,4 @@ app.post('/create-household', (req, res)=> {
 
 
 
-app.listen(4000, () => console.log('grant-disbursement api application is running'));
+app.listen(3000, () => console.log('grant-disbursement api application is running'));
