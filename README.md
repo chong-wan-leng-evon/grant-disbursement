@@ -17,16 +17,23 @@ Database: PostgreSQL
 ## API End-Points
 
 ### Create Household
-Method: POST
+Method: `POST`
   
 ```
 /api/create-household
 ```
 
-| Command | Description |
-| --- | --- |
-| `git status` | List all *new or modified* files |
-| `git diff` | Show file differences that **haven't been** staged 
+Parameter
+| Field | Type | Description |
+| --- | --- | --- |
+| housingType | text | Housing type (Possible options: Landed, Condominium, HDB) |
+
+Request Example
+```
+{
+    "housingType": "Landed"
+}
+```
   
 
 # Built With
