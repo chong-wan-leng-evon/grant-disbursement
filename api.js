@@ -15,11 +15,11 @@ app.post('/create-household', (req, res)=> {
     for(var type in household) {
         if(type == 0)
         {
-            insertQuery = `insert into household(housing_type) values('${household[type]['housing_type']}')`;
+            insertQuery = `insert into household(household_type) values('${household[type]['household_type']}')`;
         }
         else
         {
-            insertQuery += `, ('${household[type]['housing_type']}')`;
+            insertQuery += `, ('${household[type]['household_type']}')`;
         }
     }
 
@@ -70,7 +70,7 @@ app.post('/add-member', (req, res)=> {
     }
 
     insertQuery = `WITH a AS (
-        SELECT id FROM household where housing_type = '${householdMember[0]['housing_type']}' 
+        SELECT id FROM household where household_type = '${householdMember[0]['household_type']}' 
     ), b AS (
         INSERT INTO household_family(household_id)
         SELECT id
@@ -91,9 +91,21 @@ app.post('/add-member', (req, res)=> {
     client.end;
 });
 
-
-
 //Endpoint 3: List all the households in the database
+app.get('/list-household', (req, res)=>{
+    client.query(`select h.household_type, hfm.member_name, hfm.member_gender, hfm.member_marital_status, hfm.member_spouse, hfm.member_occupation_type, hfm.member_annual_income, hfm.member_dob
+                    from household h
+                    inner join household_family hf
+                    on h.id = hf.household_id
+                    inner join household_family_member hfm
+                    on hf.id = hfm.household_family_id
+                    order by h.id`, (err, result)=>{
+        if(!err){
+            res.send(result.rows);
+        }
+    });
+    client.end;
+});
 
 //Endpoint 4: Show the details of a household in the database by member id
 
