@@ -8,6 +8,29 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
 //Endpoint 1: Create Household
+app.post('/create-household', (req, res)=> {
+    const household = req.body;
+    let insertQuery = '';
+
+    for(var type in household) {
+        if(type == 0)
+        {
+            insertQuery = `insert into household(housingType) values('${household[type]['housingtype']}')`;
+        }
+        else
+        {
+            insertQuery += `, ('${household[type]['housingtype']}')`;
+        }
+    }
+
+    client.query(insertQuery, (err, result)=>{
+        if(!err){
+            res.send('Household created successfully.')
+        }
+        else{ console.log(err.message) }
+    })
+    client.end;
+});
 
 //Endpoint 2: Add a family member to household
 //maritalStatus: single, married, widowed, divorced
