@@ -9,3 +9,6 @@ This project consists of RESTful API that would help to user to decide on the gr
 - Without the use of GitHub Desktop
   - Press on the "code" button (in green), then press on the "download zip" button
   - Choose a local path to save the project into
+
+# Prerequisites
+Database: PostgreSQL
