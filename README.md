@@ -98,6 +98,39 @@ Response Example
 Family member added to household successfully.
 ```
 
+### Endpoint 3: List all the households in the database
+Method: `GET`
+
+```
+/list-household
+```
+
+Response Example
+```
+[
+    {
+        "household_type": "HDB",
+        "member_name": "Alvin",
+        "member_gender": "M",
+        "member_marital_status": "Married",
+        "member_spouse": "Evon",
+        "member_occupation_type": "Employed",
+        "member_annual_income": "2000.00",
+        "member_dob": "1990-12-31T16:00:00.000Z"
+    },
+    {
+        "household_type": "HDB",
+        "member_name": "Evon",
+        "member_gender": "F",
+        "member_marital_status": "Married",
+        "member_spouse": "Alvin",
+        "member_occupation_type": "Employed",
+        "member_annual_income": "2000.00",
+        "member_dob": "1991-12-10T16:00:00.000Z"
+    }
+]
+```
+
 # Built With
 - Node.js
 - Express.js
