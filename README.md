@@ -170,6 +170,29 @@ Response Example
 ]
 ```
 
+### Endpoint 7: Delete Family Member - Remove Family Member from the Household
+Method: `DELETE`
+
+```
+delete-member/{household_family_id}/{household_family_member_id}
+```
+
+Request Example
+```
+/delete-member/10/16
+```
+
+Parameter
+| Field | Type | Description |
+| --- | --- | --- |
+| household_family_id | integer | Id representing a household family |
+| household_family_member_id | integer | Id representing the member to be removed |
+
+Response Example
+```
+Family member removed successfully from the household.
+```
+
 # Built With
 - Node.js
 - Express.js
