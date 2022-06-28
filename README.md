@@ -17,7 +17,11 @@ Database: PostgreSQL
 API End-Points
 1) Create Household
   Method: POST
-  /api/member/emailPreference
+  
+```
+/api/member/emailPreference
+```
+  
 
 # Built With
 - Node.js
