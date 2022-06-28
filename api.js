@@ -108,6 +108,21 @@ app.get('/list-household', (req, res)=>{
 });
 
 //Endpoint 4: Show the details of a household in the database by member id
+app.get('/show-household/:id', (req, res)=>{
+    client.query(`select rtrim(h.household_type) as household_type, rtrim(hfm.member_name) as member_name, hfm.member_gender, rtrim(hfm.member_marital_status) as member_marital_status, rtrim(hfm.member_spouse) as member_spouse, rtrim(hfm.member_occupation_type) as member_occupation_type, hfm.member_annual_income, hfm.member_dob
+                    from household_family hf
+                    inner join household h
+                    on h.id = hf.household_id
+                    inner join household_family_member hfm
+                    on hf.id = hfm.household_family_id
+                    where hf.id = ${req.params.id}
+                    order by hfm.id asc`, (err, result)=>{
+        if(!err){
+            res.send(result.rows);
+        }
+    });
+    client.end;
+});
 
 //Endpoint 5: Search for households and recipients of grant disbursement
 
