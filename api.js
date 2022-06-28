@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 //Endpoint 1: Create Household
 
 //Endpoint 2: Add a family member to household
-//,aritalStatus: single, married, widowed, divorced
+//maritalStatus: single, married, widowed, divorced
 
 
 //Endpoint 3: List all the households in the database
