@@ -15,11 +15,11 @@ app.post('/create-household', (req, res)=> {
     for(var type in household) {
         if(type == 0)
         {
-            insertQuery = `insert into household(housingType) values('${household[type]['housingtype']}')`;
+            insertQuery = `insert into household(housing_type) values('${household[type]['housing_type']}')`;
         }
         else
         {
-            insertQuery += `, ('${household[type]['housingtype']}')`;
+            insertQuery += `, ('${household[type]['housing_type']}')`;
         }
     }
 
@@ -36,6 +36,7 @@ app.post('/create-household', (req, res)=> {
 //maritalStatus: single, married, widowed, divorced
 
 
+
 //Endpoint 3: List all the households in the database
 
 //Endpoint 4: Show the details of a household in the database by member id
@@ -48,4 +49,4 @@ app.post('/create-household', (req, res)=> {
 
 
 
-app.listen(3000, () => console.log('grant-disbursement api application is running'));
+app.listen(4000, () => console.log('grant-disbursement api application is running'));
