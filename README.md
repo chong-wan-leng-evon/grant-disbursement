@@ -110,16 +110,6 @@ Response Example
 [
     {
         "household_type": "HDB",
-        "member_name": "Alvin",
-        "member_gender": "M",
-        "member_marital_status": "Married",
-        "member_spouse": "Evon",
-        "member_occupation_type": "Employed",
-        "member_annual_income": "2000.00",
-        "member_dob": "1990-12-31T16:00:00.000Z"
-    },
-    {
-        "household_type": "HDB",
         "member_name": "Evon",
         "member_gender": "F",
         "member_marital_status": "Married",
@@ -127,6 +117,16 @@ Response Example
         "member_occupation_type": "Employed",
         "member_annual_income": "2000.00",
         "member_dob": "1991-12-10T16:00:00.000Z"
+    },
+    {
+        "household_type": "HDB",
+        "member_name": "Alvin",
+        "member_gender": "M",
+        "member_marital_status": "Married",
+        "member_spouse": "Evon",
+        "member_occupation_type": "Employed",
+        "member_annual_income": "2000.00",
+        "member_dob": "1990-12-31T16:00:00.000Z"
     }
 ]
 ```
