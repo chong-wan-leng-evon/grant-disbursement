@@ -16,7 +16,7 @@ Database: PostgreSQL
 
 ## API End-Points
 
-### Create Household
+### Endpoint 1: Create Household
 Method: `POST`
   
 ```
@@ -30,9 +30,22 @@ Parameter
 
 Request Example
 ```
-{
-    "housingType": "Landed"
-}
+[
+	{
+    	"housingtype": "Landed"
+	},
+	{
+	    "housingtype": "Condominium"
+	},
+	{
+	    "housingtype": "HDB"
+	}
+]
+```
+
+Response Example
+```
+Household created successfully.
 ```
   
 
