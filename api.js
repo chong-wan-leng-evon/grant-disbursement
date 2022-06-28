@@ -93,13 +93,13 @@ app.post('/add-member', (req, res)=> {
 
 //Endpoint 3: List all the households in the database
 app.get('/list-household', (req, res)=>{
-    client.query(`select h.household_type, hfm.member_name, hfm.member_gender, hfm.member_marital_status, hfm.member_spouse, hfm.member_occupation_type, hfm.member_annual_income, hfm.member_dob
-                    from household h
-                    inner join household_family hf
-                    on h.id = hf.household_id
-                    inner join household_family_member hfm
-                    on hf.id = hfm.household_family_id
-                    order by h.id`, (err, result)=>{
+    client.query(`select rtrim(h.household_type) as household_type, rtrim(hfm.member_name) as member_name, hfm.member_gender, rtrim(hfm.member_marital_status) as member_marital_status, rtrim(hfm.member_spouse) as member_spouse, rtrim(hfm.member_occupation_type) as member_occupation_type, hfm.member_annual_income, hfm.member_dob
+                from household h
+                inner join household_family hf
+                on h.id = hf.household_id
+                inner join household_family_member hfm
+                on hf.id = hfm.household_family_id
+                order by hfm.id asc`, (err, result)=>{
         if(!err){
             res.send(result.rows);
         }
