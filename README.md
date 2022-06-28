@@ -13,6 +13,12 @@ This project consists of RESTful API that would help to user to decide on the gr
 # Prerequisites
 Database: PostgreSQL
 
+
+API End-Points
+1) Create Household
+  Method: POST
+  /api/member/emailPreference
+
 # Built With
 - Node.js
 - Express.js
