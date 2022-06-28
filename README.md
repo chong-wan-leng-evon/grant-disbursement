@@ -26,19 +26,19 @@ Method: `POST`
 Parameter
 | Field | Type | Description |
 | --- | --- | --- |
-| housingType | text | Housing type (Possible options: Landed, Condominium, HDB) |
+| housing_type | text | Housing type (Possible options: Landed, Condominium, HDB) |
 
 Request Example
 ```
 [
 	{
-    	"housingtype": "Landed"
+    		"housing_type": "Landed"
 	},
 	{
-	    "housingtype": "Condominium"
+		"housing_type": "Condominium"
 	},
 	{
-	    "housingtype": "HDB"
+		"housing_type": "HDB"
 	}
 ]
 ```
