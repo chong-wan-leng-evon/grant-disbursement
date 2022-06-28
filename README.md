@@ -26,19 +26,19 @@ Method: `POST`
 Parameter
 | Field | Type | Description |
 | --- | --- | --- |
-| housing_type | text | Housing type (Options: Landed, Condominium, HDB) |
+| household_type | text | Housing type (Options: Landed, Condominium, HDB) |
 
 Request Example
 ```
 [
 	{
-    		"housing_type": "Landed"
+    		"household_type": "Landed"
 	},
 	{
-		"housing_type": "Condominium"
+		"household_type": "Condominium"
 	},
 	{
-		"housing_type": "HDB"
+		"household_type": "HDB"
 	}
 ]
 ```
@@ -58,7 +58,7 @@ Method: `POST`
 Parameter
 | Field | Type | Description |
 | --- | --- | --- |
-| housing_type | text | Housing type (Options: Landed, Condominium, HDB) |
+| household_type | text | Household type (Options: Landed, Condominium, HDB) |
 | member_name | character (256) | Name |
 | member_gender | character (1) | Gender (Options: M, F) |
 | member_marital_status | character (25) | Marital Status (Options: Single, Married, Widowed, Divorced) |
@@ -71,7 +71,7 @@ Request Example
 ```
 [
 	{
-		"housing_type": "HDB",
+		"household_type": "HDB",
 		"member_name": "Evon",
 		"member_gender": "F",
 		"member_marital_status": "Married",
@@ -81,7 +81,7 @@ Request Example
 		"member_dob": "1991-12-11"
 	},
 		{
-		"housing_type": "HDB",
+		"household_type": "HDB",
 		"member_name": "Alvin",
 		"member_gender": "M",
 		"member_marital_status": "Married",
