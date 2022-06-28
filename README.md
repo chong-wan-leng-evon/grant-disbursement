@@ -12,3 +12,8 @@ This project consists of RESTful API that would help to user to decide on the gr
 
 # Prerequisites
 Database: PostgreSQL
+
+# Built With
+- Node.js
+- Express.js
+- PostgreSQL
