@@ -14,13 +14,18 @@ This project consists of RESTful API that would help to user to decide on the gr
 Database: PostgreSQL
 
 
-API End-Points
-1) Create Household
-  Method: POST
+## API End-Points
+
+### Create Household
+Method: POST
   
 ```
-/api/member/emailPreference
+/api/create-household
 ```
+
+| Field         | Type          | Description |
+| ------------- | ------------- |
+| housingType   | text          | Housing type (Possible options: Landed, Condominium, HDB) |
   
 
 # Built With
