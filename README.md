@@ -23,9 +23,10 @@ Method: POST
 /api/create-household
 ```
 
-| Field         | Type          | Description |
-| ------------- | ------------- |
-| housingType   | text          | Housing type (Possible options: Landed, Condominium, HDB) |
+| Command | Description |
+| --- | --- |
+| `git status` | List all *new or modified* files |
+| `git diff` | Show file differences that **haven't been** staged 
   
 
 # Built With
