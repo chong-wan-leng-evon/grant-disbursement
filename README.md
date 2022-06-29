@@ -170,6 +170,70 @@ Response Example
 ]
 ```
 
+### Endpoint 5: Search for households and recipients of grant disbursement
+Method: `GET`
+
+Assumption: Each search is for one grant scheme only
+
+```
+/search-grant/{household_type}/{annual_income}/{children_age}
+```
+
+Baby Sunshine Grant
+Assumption: Only search for family member who is younger than 5 year old
+
+Request Example
+```
+/search-grant/nill/nil/less5
+```
+
+Parameter
+| Field | Type | Description |
+| --- | --- | --- |
+| household_type | text | Household type (Options: Landed, Condominium, HDB) |
+| annual_income | text | Total household income (e.g. less100000) |
+| children_age | text | Age of children (e.g. less5) |
+
+Response Example
+```
+[
+    {
+        "id": 21,
+        "household_family_id": 5,
+        "member_name": "Emre",
+        "member_gender": "M",
+        "member_marital_status": "Single",
+        "member_spouse": null,
+        "member_occupation_type": "Student",
+        "member_annual_income": null,
+        "member_dob": "2019-12-10T16:00:00.000Z"
+    }
+]
+```
+
+
+Yolo Grant
+Request Example
+```
+/search-grant/HDB/less100000
+```
+
+Parameter
+| Field | Type | Description |
+| --- | --- | --- |
+| household_type | text | Household type (Options: Landed, Condominium, HDB) |
+| annual_income | text | Total household income (e.g. less100000) |
+
+Response Example
+```
+[
+    {
+        "household_family_id": 8,
+        "total_annual_income": "150.00"
+    }
+]
+```
+
 ### Endpoint 6: Delete household - Remove Household and family members
 Method: `DELETE`
 
