@@ -341,7 +341,7 @@ Assumption: Only search for household with family member that is with husband & 
 
 Request Example
 ```
-/search-grant/nil/nil/less18/married
+/search-grant/nil/nil/less18/Married
 ```
 
 #### Elder Bonus
