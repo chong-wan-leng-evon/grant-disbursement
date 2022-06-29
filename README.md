@@ -31,6 +31,7 @@ http://localhost:{based on the port number set in last line of api.js}
 
 ### Endpoint 1: Create Household
 Method: `POST`
+
 Data: Json
   
 ```
