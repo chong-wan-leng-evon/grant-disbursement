@@ -315,7 +315,7 @@ Method: `GET`
 Assumption: Each search is for one grant scheme only
 
 ```
-/search-grant/{household_type}/{annual_income}/{member_age}
+/search-grant/{household_type}/{annual_income}/{member_age}/{marital_status}
 ```
 
 Parameter
