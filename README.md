@@ -129,7 +129,7 @@ SQL 1:
 		"member_marital_status": "",
 		"member_spouse": "",
 		"member_occupation_type": "Employed",
-		"member_annual_income": 4000,
+		"member_annual_income": 400000,
 		"member_dob": "1991-12-11"
 	}
 ]
@@ -145,7 +145,7 @@ SQL 2:
 		"member_marital_status": "",
 		"member_spouse": "",
 		"member_occupation_type": "Employed",
-		"member_annual_income": 100000,
+		"member_annual_income": 10000000,
 		"member_dob": "1991-12-11"
 	}
 ]
