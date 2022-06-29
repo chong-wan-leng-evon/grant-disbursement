@@ -170,6 +170,29 @@ Response Example
 ]
 ```
 
+### Endpoint 6: Delete household - Remove Household and family members
+Method: `DELETE`
+
+```
+delete-household/{household_family_id}
+```
+
+Request Example
+```
+/delete-household/10
+```
+
+Parameter
+| Field | Type | Description |
+| --- | --- | --- |
+| household_family_id | integer | Id representing a household family |
+
+Response Example
+```
+Household and family members removed successfully the household type.
+```
+
+
 ### Endpoint 7: Delete Family Member - Remove Family Member from the Household
 Method: `DELETE`
 
