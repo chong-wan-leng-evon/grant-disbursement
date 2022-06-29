@@ -29,6 +29,41 @@ Default port number is 3000
 http://localhost:{based on the port number set in last line of api.js}
 ```
 
+### Create tables in PostgreSQL
+SQL 1:
+```
+CREATE TABLE IF NOT EXISTS household
+(
+    id serial primary key,
+    household_type text
+)
+```
+
+SQL 2:
+```
+CREATE TABLE IF NOT EXISTS household_family
+(
+    id serial primary key,
+    household_id integer NOT NULL
+)
+```
+
+SQL 3:
+```
+CREATE TABLE IF NOT EXISTS household_family_member
+(
+    id serial primary key,
+    household_family_id integer,
+    member_name character(256),
+    member_gender character(1),
+    member_marital_status character(25),
+    member_spouse character(25),
+    member_occupation_type character(25),
+    member_annual_income numeric(15,2),
+    member_dob date
+)
+```
+
 ### Endpoint 1: Create Household
 Method: `POST`
 
