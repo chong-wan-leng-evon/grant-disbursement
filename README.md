@@ -213,13 +213,23 @@ Response Example
 ```
 [
     {
+        "household_type": "Landed",
+        "member_name": "Name1",
+        "member_gender": "F",
+        "member_marital_status": "",
+        "member_spouse": "",
+        "member_occupation_type": "Employed",
+        "member_annual_income": "4000.00",
+        "member_dob": "1991-12-10T16:00:00.000Z"
+    },
+    {
         "household_type": "HDB",
         "member_name": "Evon",
         "member_gender": "F",
         "member_marital_status": "Married",
         "member_spouse": "Alvin",
         "member_occupation_type": "Employed",
-        "member_annual_income": "2000.00",
+        "member_annual_income": "4000.00",
         "member_dob": "1991-12-10T16:00:00.000Z"
     },
     {
@@ -229,8 +239,38 @@ Response Example
         "member_marital_status": "Married",
         "member_spouse": "Evon",
         "member_occupation_type": "Employed",
-        "member_annual_income": "2000.00",
+        "member_annual_income": "5000.00",
         "member_dob": "1990-12-31T16:00:00.000Z"
+    },
+    {
+        "household_type": "HDB",
+        "member_name": "Emre",
+        "member_gender": "M",
+        "member_marital_status": "Single",
+        "member_spouse": "",
+        "member_occupation_type": "Student",
+        "member_annual_income": "0.00",
+        "member_dob": "2021-08-17T16:00:00.000Z"
+    },
+    {
+        "household_type": "HDB",
+        "member_name": "Amy",
+        "member_gender": "M",
+        "member_marital_status": "Widowed",
+        "member_spouse": "",
+        "member_occupation_type": "Unemployed",
+        "member_annual_income": "0.00",
+        "member_dob": "1955-07-19T16:30:00.000Z"
+    },
+    {
+        "household_type": "Condominium",
+        "member_name": "Name2",
+        "member_gender": "M",
+        "member_marital_status": "",
+        "member_spouse": "",
+        "member_occupation_type": "Employed",
+        "member_annual_income": "100000.00",
+        "member_dob": "1991-12-10T16:00:00.000Z"
     }
 ]
 ```
@@ -248,28 +288,23 @@ Parameter
 | --- | --- | --- |
 | household_family_id | integer | Id representing a household family |
 
+Request Example
+```
+/show-household/1
+```
+
 Response Example
 ```
 [
     {
-        "household_type": "HDB",
-        "member_name": "Evon",
+        "household_type": "Landed",
+        "member_name": "Name1",
         "member_gender": "F",
-        "member_marital_status": "Married",
-        "member_spouse": "Alvin",
+        "member_marital_status": "",
+        "member_spouse": "",
         "member_occupation_type": "Employed",
-        "member_annual_income": "2000.00",
+        "member_annual_income": "4000.00",
         "member_dob": "1991-12-10T16:00:00.000Z"
-    },
-    {
-        "household_type": "HDB",
-        "member_name": "Alvin",
-        "member_gender": "M",
-        "member_marital_status": "Married",
-        "member_spouse": "Evon",
-        "member_occupation_type": "Employed",
-        "member_annual_income": "2000.00",
-        "member_dob": "1990-12-31T16:00:00.000Z"
     }
 ]
 ```
