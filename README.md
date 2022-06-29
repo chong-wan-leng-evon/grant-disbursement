@@ -318,7 +318,8 @@ Assumption: Each search is for one grant scheme only
 /search-grant/{household_type}/{annual_income}/{children_age}
 ```
 
-Baby Sunshine Grant
+#### Baby Sunshine Grant
+
 Assumption: Only search for family member who is younger than 5 year old
 
 Request Example
@@ -351,7 +352,7 @@ Response Example
 ```
 
 
-Yolo Grant
+#### Yolo Grant
 Request Example
 ```
 /search-grant/HDB/less100000
