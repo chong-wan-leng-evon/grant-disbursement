@@ -11,10 +11,23 @@ This project consists of RESTful API that would help to user to decide on the gr
   - Choose a local path to save the project into
 
 # Prerequisites
-Database: PostgreSQL
+- PostgreSQL: Download (https://www.postgresql.org/download/) and create an account
+    - During account creation set password as rootUser
+    - open up connection.js to chang the cofiguration according to your postgersql server, if required
+- Postman: Download (https://www.postman.com/downloads/) and create an account
 
+# Run the project
+### npm install
+- In the project directory, from the terminal run npm install
+
+### node api.js
+- In the project directory, from the terminal node api.js
 
 ## API End-Points
+Default port number is 3000
+```
+http://localhost:{based on the port number set in last line of api.js}
+```
 
 ### Endpoint 1: Create Household
 Method: `POST`
