@@ -125,18 +125,87 @@ app.get('/show-household/:id', (req, res)=>{
 });
 
 //Endpoint 5: Search for households and recipients of grant disbursement
-app.get('/search-grant/:household_type/:annual_income', (req, res)=>{
+app.get('/search-grant/:household_type/:annual_income/:member_age', (req, res)=>{
     let searchQuery = '';
+    let member_age_operator = '';
+    let annual_income_operator = '';
 
     //Student Encouragement Bonus
     //Family Togetherness Scheme
-    //Elder Bonus
-    //Baby Sunshine Grant
 
-    //YOLO GST Grant
+    //Elder Bonus (HDB household with family members above the age of 50)
+    if(req.params.household_type !== "nil" && req.params.annual_income == "nil" && req.params.member_age !== "nil")
+    {
+        member_age_operator = req.params.member_age.substring(0, 4);
+
+        if(member_age_operator == 'more')
+        {
+            member_age_operator = '<=';
+        }
+        else
+        {
+            member_age_operator = '>=';
+        }
+
+        const member_age = parseFloat(req.params.member_age.substring(4));
+
+        searchQuery = `with a as
+                        (
+                            select household_family_id
+                                                from household_family hf
+                                                inner join household h
+                                                on h.id = hf.household_id
+                                                inner join household_family_member hfm
+                                                on hf.id = hfm.household_family_id
+                                                where h.household_type = '${req.params.household_type}'
+                                                and hfm.member_dob${member_age_operator} hfm.member_dob - INTERVAL '${member_age} years'
+                        ) select hfm.*
+                                                from household_family hf
+                                                inner join household h
+                                                on h.id = hf.household_id
+                                                inner join household_family_member hfm
+                                                on hf.id = hfm.household_family_id
+                                where hfm.household_family_id = (SELECT household_family_id FROM a )`;
+    }
+
+    //Baby Sunshine Grant (children younger than 5)
+    if(req.params.household_type == "nil" && req.params.annual_income == "nil" && req.params.member_age !== "nil")
+    {
+        member_age_operator = req.params.member_age.substring(0, 4);
+
+        if(member_age_operator == 'more')
+        {
+            member_age_operator = '<=';
+        }
+        else
+        {
+            member_age_operator = '>=';
+        }
+
+        const member_age = parseFloat(req.params.member_age.substring(4));
+
+        searchQuery = `with a as
+                        (
+                            select household_family_id
+                                                from household_family hf
+                                                inner join household h
+                                                on h.id = hf.household_id
+                                                inner join household_family_member hfm
+                                                on hf.id = hfm.household_family_id
+                                                where hfm.member_dob${member_age_operator} hfm.member_dob - INTERVAL '${member_age} years'
+                        ) select hfm.*
+                                                from household_family hf
+                                                inner join household h
+                                                on h.id = hf.household_id
+                                                inner join household_family_member hfm
+                                                on hf.id = hfm.household_family_id
+                                where hfm.household_family_id = (SELECT household_family_id FROM a )`;
+    }
+
+    //YOLO GST Grant (income of less than $100,000)
     if(req.params.household_type !== "nil" && req.params.annual_income !== "nil")
     {
-        let annual_income_operator = req.params.annual_income.substring(0, 4);
+        annual_income_operator = req.params.annual_income.substring(0, 4);
 
         if(annual_income_operator == 'more')
         {
@@ -160,34 +229,17 @@ app.get('/search-grant/:household_type/:annual_income', (req, res)=>{
                                             group by hfm.household_family_id
                         ) R
                         WHERE total_annual_income ${annual_income_operator} ${annual_income};`;
-
-        client.query(searchQuery, (err, result)=>{
-            if(!err){                   
-                res.send(result.rows);
-            }
-            else{ 
-                console.log(err.message) 
-            }
-            })
-        client.end;
     }
 
-    /*Student Encouragement Bonus
-    - less than 16 years old
-    - income of less than $150,000
-
-    Family Togetherness Scheme
-    - households with husband & wife
-    - child(ren) younger than 18 years old.
-
-    Elder Bonus
-    - above the age of 50
-
-    Baby Sunshine Grant
-    - children younger than 5
-
-    YOLO GST Grant
-    - income of less than $100,000*/
+    client.query(searchQuery, (err, result)=>{
+        if(!err){                   
+            res.send(result.rows);
+        }
+        else{ 
+            console.log(err.message) 
+        }
+        })
+    client.end;
 });
 
 //Endpoint 6: Delete household - Remove Household and family members
@@ -221,4 +273,4 @@ app.delete('/delete-member/:household_family_id/:household_family_member_id', (r
 
 
 
-app.listen(3000, () => console.log('grant-disbursement api application is running'));
+app.listen(9200, () => console.log('grant-disbursement api application is running'));
