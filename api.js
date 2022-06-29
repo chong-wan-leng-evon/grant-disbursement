@@ -129,10 +129,10 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
     let searchQuery = '';
     let member_age_operator = '';
     let annual_income_operator = '';
+    let member_age = '';
+    let annual_income = '';
 
-    //Student Encouragement Bonus
-    //Family Togetherness Scheme
-    if(req.params.household_type == "nil" && req.params.annual_income == "nil" && req.params.member_age !== "nil" && req.params.martial_status !== "nil")
+    if(req.params.member_age !== "nil")
     {
         member_age_operator = req.params.member_age.substring(0, 4);
 
@@ -145,8 +145,60 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
             member_age_operator = '>=';
         }
 
-        const member_age = parseFloat(req.params.member_age.substring(4));
+        member_age = parseFloat(req.params.member_age.substring(4));
+    }
 
+    if(req.params.annual_income !== "nil")
+    {
+        annual_income_operator = req.params.annual_income.substring(0, 4);
+
+        if(annual_income_operator == 'more')
+        {
+            annual_income_operator = '>';
+        }
+        else
+        {
+            annual_income_operator = '<';
+        }
+
+        annual_income = parseFloat(req.params.annual_income.substring(4)).toFixed(2);
+    }
+
+    //Student Encouragement Bonus (Households with children of less than 16 years old and household income of less than $150,000)
+    if(req.params.household_type == "nil" && req.params.annual_income !== "nil" && req.params.member_age !== "nil" && req.params.martial_status === "nil")
+    {
+        searchQuery = `with a as (
+                        SELECT household_family_id, total_annual_income FROM (
+                                                    select hfm.household_family_id as household_family_id, sum(hfm.member_annual_income) as total_annual_income
+                                                                    from household_family hf
+                                                                    inner join household h
+                                                                    on h.id = hf.household_id
+                                                                    inner join household_family_member hfm
+                                                                    on hf.id = hfm.household_family_id
+                                                                    group by hfm.household_family_id
+                                                ) R
+                                                WHERE total_annual_income ${annual_income_operator} ${annual_income}
+                            ), b as (
+                                                    select hfm.household_family_id
+                                                                        from household_family hf
+                                                                        inner join household h
+                                                                        on h.id = hf.household_id
+                                                                        inner join household_family_member hfm
+                                                                        on hf.id = hfm.household_family_id
+                                                        where hfm.household_family_id = (SELECT household_family_id FROM a )
+                                                        and hfm.member_dob${member_age_operator} hfm.member_dob - INTERVAL '${member_age} years'
+                                                ) select hfm.*
+                                                                        from household_family hf
+                                                                        inner join household h
+                                                                        on h.id = hf.household_id
+                                                                        inner join household_family_member hfm
+                                                                        on hf.id = hfm.household_family_id
+                                                        where hfm.household_family_id = (SELECT household_family_id FROM b )`;
+    }
+
+    //Family Togetherness Scheme (Households with husband & wife and Has child(ren) younger than 18 years old)
+    if(req.params.household_type == "nil" && req.params.annual_income == "nil" && req.params.member_age !== "nil" && req.params.martial_status !== "nil")
+    {
         searchQuery = `with a as
                                 (
                                     select hfm.household_family_id
@@ -180,19 +232,6 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
     //Elder Bonus (HDB household with family members above the age of 50)
     if(req.params.household_type !== "nil" && req.params.annual_income == "nil" && req.params.member_age !== "nil")
     {
-        member_age_operator = req.params.member_age.substring(0, 4);
-
-        if(member_age_operator == 'more')
-        {
-            member_age_operator = '<=';
-        }
-        else
-        {
-            member_age_operator = '>=';
-        }
-
-        const member_age = parseFloat(req.params.member_age.substring(4));
-
         searchQuery = `with a as
                         (
                             select household_family_id
@@ -215,19 +254,6 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
     //Baby Sunshine Grant (children younger than 5)
     if(req.params.household_type == "nil" && req.params.annual_income == "nil" && req.params.member_age !== "nil")
     {
-        member_age_operator = req.params.member_age.substring(0, 4);
-
-        if(member_age_operator == 'more')
-        {
-            member_age_operator = '<=';
-        }
-        else
-        {
-            member_age_operator = '>=';
-        }
-
-        const member_age = parseFloat(req.params.member_age.substring(4));
-
         searchQuery = `with a as
                         (
                             select household_family_id
@@ -249,19 +275,6 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
     //YOLO GST Grant (income of less than $100,000)
     if(req.params.household_type !== "nil" && req.params.annual_income !== "nil")
     {
-        annual_income_operator = req.params.annual_income.substring(0, 4);
-
-        if(annual_income_operator == 'more')
-        {
-            annual_income_operator = '>';
-        }
-        else
-        {
-            annual_income_operator = '<';
-        }
-
-        const annual_income = parseFloat(req.params.annual_income.substring(4)).toFixed(2);
-
         searchQuery = `SELECT household_family_id, total_annual_income FROM (
                             select hfm.household_family_id as household_family_id, sum(hfm.member_annual_income) as total_annual_income
                                             from household_family hf
@@ -317,4 +330,4 @@ app.delete('/delete-member/:household_family_id/:household_family_member_id', (r
 
 
 
-app.listen(3000, () => console.log('grant-disbursement api application is running'));
+app.listen(9900, () => console.log('grant-disbursement api application is running'));
