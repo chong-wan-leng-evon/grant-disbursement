@@ -121,7 +121,6 @@ Parameter
 Request Example
 ```
 SQL 1:
-```
 [
 	{
 		"household_type": "Landed",
@@ -136,8 +135,8 @@ SQL 1:
 ]
 ```
 
-SQL 2:
 ```
+SQL 2:
 [
 	{
 		"household_type": "Condominium",
@@ -152,8 +151,8 @@ SQL 2:
 ]
 ```
 
-SQL 3:
 ```
+SQL 3:
 [
 	{
 		"household_type": "HDB",
