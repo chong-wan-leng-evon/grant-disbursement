@@ -170,6 +170,36 @@ Response Example
 ]
 ```
 
+### Endpoint 5: Search for households and recipients of grant disbursement
+Method: `GET`
+Assumption: Each search is for one grant scheme only
+
+```
+/search-grant/{household_type}/{annual_income}
+```
+
+Yolo Grant
+Request Example
+```
+/search-grant/HDB/less100000
+```
+
+Parameter
+| Field | Type | Description |
+| --- | --- | --- |
+| household_type | text | Household type (Options: Landed, Condominium, HDB) |
+| annual_income | text | Total household income (e.g. less100000) |
+
+Response Example
+```
+[
+    {
+        "household_family_id": 8,
+        "total_annual_income": "150.00"
+    }
+]
+```
+
 ### Endpoint 6: Delete household - Remove Household and family members
 Method: `DELETE`
 
