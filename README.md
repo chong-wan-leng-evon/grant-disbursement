@@ -29,7 +29,8 @@ Default port number is 3000
 http://localhost:{based on the port number set in last line of api.js}
 ```
 
-### Create tables in PostgreSQL
+### Datebase
+#### Create tables in PostgreSQL
 SQL 1:
 ```
 CREATE TABLE IF NOT EXISTS household
@@ -63,6 +64,90 @@ CREATE TABLE IF NOT EXISTS household_family_member
     member_dob date
 )
 ```
+#### Insert data to tables
+SQL 1:
+```
+
+```
+
+SQL 2:
+```
+[
+	{
+		"household_type": "Landed",
+		"member_name": "Name1",
+		"member_gender": "F",
+		"member_marital_status": "",
+		"member_spouse": "",
+		"member_occupation_type": "Employed",
+		"member_annual_income": 4000,
+		"member_dob": "1991-12-11"
+	}
+]
+```
+
+SQL 2:
+```
+[
+	{
+		"household_type": "Condominium",
+		"member_name": "Name2",
+		"member_gender": "M",
+		"member_marital_status": "",
+		"member_spouse": "",
+		"member_occupation_type": "Employed",
+		"member_annual_income": 100000,
+		"member_dob": "1991-12-11"
+	}
+]
+```
+
+SQL 3:
+```
+[
+	{
+		"household_type": "HDB",
+		"member_name": "Evon",
+		"member_gender": "F",
+		"member_marital_status": "Married",
+		"member_spouse": "Alvin",
+		"member_occupation_type": "Employed",
+		"member_annual_income": 4000,
+		"member_dob": "1991-12-11"
+	},
+	{
+		"household_type": "HDB",
+		"member_name": "Alvin",
+		"member_gender": "M",
+		"member_marital_status": "Married",
+		"member_spouse": "Evon",
+		"member_occupation_type": "Employed",
+		"member_annual_income": 5000,
+		"member_dob": "1991-01-01"
+	},
+	{
+		"household_type": "HDB",
+		"member_name": "Emre",
+		"member_gender": "M",
+		"member_marital_status": "Single",
+		"member_spouse": "",
+		"member_occupation_type": "Student",
+		"member_annual_income": 0,
+		"member_dob": "2021-08-18"
+	},
+	{
+		"household_type": "HDB",
+		"member_name": "Amy",
+		"member_gender": "M",
+		"member_marital_status": "Widowed",
+		"member_spouse": "",
+		"member_occupation_type": "Unemployed",
+		"member_annual_income": 0,
+		"member_dob": "1955-07-20"
+	}
+]
+```
+
 
 ### Endpoint 1: Create Household
 Method: `POST`
