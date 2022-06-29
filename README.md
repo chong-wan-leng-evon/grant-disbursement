@@ -64,13 +64,63 @@ CREATE TABLE IF NOT EXISTS household_family_member
     member_dob date
 )
 ```
-#### Insert data to tables
+
+### Endpoint 1: Create Household
+Method: `POST`
+
+Data format: Json (In postman: Body -> raw -> Json)
+  
+```
+/create-household
+```
+
+Parameter
+| Field | Type | Description |
+| --- | --- | --- |
+| household_type | text | Housing type (Options: Landed, Condominium, HDB) |
+
+Request Example
+```
+[
+	{
+    		"household_type": "Landed"
+	},
+	{
+		"household_type": "Condominium"
+	},
+	{
+		"household_type": "HDB"
+	}
+]
+```
+
+Response Example
+```
+Household created successfully.
+```
+  
+### Endpoint 2: Add family member to household
+Method: `POST`
+
+```
+/add-member
+```
+
+Parameter
+| Field | Type | Description |
+| --- | --- | --- |
+| household_type | text | Household type (Options: Landed, Condominium, HDB) |
+| member_name | character (256) | Name |
+| member_gender | character (1) | Gender (Options: M, F) |
+| member_marital_status | character (25) | Marital Status (Options: Single, Married, Widowed, Divorced) |
+| member_spouse | character (25) | Spouse name |
+| member_occupation_type | character (25) | Occupation (Options: Unemployed, Student, Employed) |
+| member_annual_income | numberic (15, 2) | Annual income |
+| member_dob | date | YYYY-MM-DD |
+		
+Request Example
+```
 SQL 1:
-```
-
-```
-
-SQL 2:
 ```
 [
 	{
@@ -144,86 +194,6 @@ SQL 3:
 		"member_occupation_type": "Unemployed",
 		"member_annual_income": 0,
 		"member_dob": "1955-07-20"
-	}
-]
-```
-
-
-### Endpoint 1: Create Household
-Method: `POST`
-
-Data format: Json (In postman: Body -> raw -> Json)
-  
-```
-/create-household
-```
-
-Parameter
-| Field | Type | Description |
-| --- | --- | --- |
-| household_type | text | Housing type (Options: Landed, Condominium, HDB) |
-
-Request Example
-```
-[
-	{
-    		"household_type": "Landed"
-	},
-	{
-		"household_type": "Condominium"
-	},
-	{
-		"household_type": "HDB"
-	}
-]
-```
-
-Response Example
-```
-Household created successfully.
-```
-  
-### Endpoint 2: Add family member to household
-Method: `POST`
-
-```
-/add-member
-```
-
-Parameter
-| Field | Type | Description |
-| --- | --- | --- |
-| household_type | text | Household type (Options: Landed, Condominium, HDB) |
-| member_name | character (256) | Name |
-| member_gender | character (1) | Gender (Options: M, F) |
-| member_marital_status | character (25) | Marital Status (Options: Single, Married, Widowed, Divorced) |
-| member_spouse | character (25) | Spouse name |
-| member_occupation_type | character (25) | Occupation (Options: Unemployed, Student, Employed) |
-| member_annual_income | numberic (15, 2) | Annual income |
-| member_dob | date | YYYY-MM-DD |
-		
-Request Example
-```
-[
-	{
-		"household_type": "HDB",
-		"member_name": "Evon",
-		"member_gender": "F",
-		"member_marital_status": "Married",
-		"member_spouse": "Alvin",
-		"member_occupation_type": "Employed",
-		"member_annual_income": 2000,
-		"member_dob": "1991-12-11"
-	},
-		{
-		"household_type": "HDB",
-		"member_name": "Alvin",
-		"member_gender": "M",
-		"member_marital_status": "Married",
-		"member_spouse": "Evon",
-		"member_occupation_type": "Employed",
-		"member_annual_income": 2000,
-		"member_dob": "1991-01-01"
 	}
 ]
 ```
