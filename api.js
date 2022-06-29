@@ -187,6 +187,7 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
                                                                         on hf.id = hfm.household_family_id
                                                         where hfm.household_family_id = (SELECT household_family_id FROM a )
                                                         and hfm.member_dob${member_age_operator} hfm.member_dob - INTERVAL '${member_age} years'
+                                                        group by hfm.household_family_id
                                                 ) select hfm.*
                                                                         from household_family hf
                                                                         inner join household h
@@ -218,6 +219,7 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
                                                         on hf.id = hfm.household_family_id
                                         where hfm.household_family_id = (SELECT household_family_id FROM a )
                                         and hfm.member_dob${member_age_operator} hfm.member_dob - INTERVAL '${member_age} years'
+                                        group by hfm.household_family_id
                                 ) select hfm.*
                                                         from household_family hf
                                                         inner join household h
@@ -226,8 +228,6 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
                                                         on hf.id = hfm.household_family_id
                                         where hfm.household_family_id = (SELECT household_family_id FROM b )`;
     }
-
-
 
     //Elder Bonus (HDB household with family members above the age of 50)
     if(req.params.household_type !== "nil" && req.params.annual_income == "nil" && req.params.member_age !== "nil")
@@ -242,6 +242,7 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
                                                 on hf.id = hfm.household_family_id
                                                 where h.household_type = '${req.params.household_type}'
                                                 and hfm.member_dob${member_age_operator} hfm.member_dob - INTERVAL '${member_age} years'
+                                                group by hfm.household_family_id
                         ) select hfm.*
                                                 from household_family hf
                                                 inner join household h
@@ -263,6 +264,7 @@ app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_statu
                                                 inner join household_family_member hfm
                                                 on hf.id = hfm.household_family_id
                                                 where hfm.member_dob${member_age_operator} hfm.member_dob - INTERVAL '${member_age} years'
+                                                group by hfm.household_family_id
                         ) select hfm.*
                                                 from household_family hf
                                                 inner join household h
@@ -330,4 +332,4 @@ app.delete('/delete-member/:household_family_id/:household_family_member_id', (r
 
 
 
-app.listen(3000, () => console.log('grant-disbursement api application is running'));
+app.listen(3600, () => console.log('grant-disbursement api application is running'));
