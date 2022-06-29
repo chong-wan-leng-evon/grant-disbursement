@@ -127,7 +127,19 @@ app.get('/show-household/:id', (req, res)=>{
 //Endpoint 5: Search for households and recipients of grant disbursement
 
 
-//Endpoint 6: Delete household
+//Endpoint 6: Delete household - Remove Household and family members
+app.delete('/delete-household/:household_family_id', (req, res)=> {
+    let insertQuery = `DELETE FROM household_family WHERE id = ${req.params.household_family_id}; 
+                        DELETE FROM household_family_member WHERE household_family_id = ${req.params.household_family_id};`;
+
+    client.query(insertQuery, (err, result)=>{
+        if(!err){
+            res.send('Household and family members removed successfully the household type.')
+        }
+        else{ console.log(err.message) }
+    })
+    client.end;
+})
 
 //Endpoint 7: Delete Family Member - Remove Family Member from the Household
 app.delete('/delete-member/:household_family_id/:household_family_member_id', (req, res)=> {
