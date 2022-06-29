@@ -315,7 +315,42 @@ Method: `GET`
 Assumption: Each search is for one grant scheme only
 
 ```
-/search-grant/{household_type}/{annual_income}/{children_age}
+/search-grant/{household_type}/{annual_income}/{member_age}
+```
+
+Parameter
+| Field | Type | Description |
+| --- | --- | --- |
+| household_type | text | Household type (Options: Landed, Condominium, HDB) |
+| annual_income | text | Total household income (e.g. less100000) |
+| member_age | text | Age of member (e.g. less5, less50) |
+| marital_status | text | Marital status of member (Options: Single, Married, Widowed, Divorced) |
+
+#### Student Encouragement 
+
+Assumption: Only search for household with family member that have children of less than 16 years old and household income of less than $150,000.
+
+Request Example
+```
+/search-grant/nil/less150000/less16/nil
+```
+
+#### Family Togetherness Scheme
+
+Assumption: Only search for household with family member that is with husband & wife and has child(ren) younger than 18 years old.
+
+Request Example
+```
+/search-grant/nil/nil/less18/married
+```
+
+#### Elder Bonus
+
+Assumption: Only search for household with family member that is from HDB household and more than 50 years old.
+
+Request Example
+```
+/search-grant/nil/nil/more50/nil
 ```
 
 #### Baby Sunshine Grant
@@ -324,55 +359,19 @@ Assumption: Only search for family member who is younger than 5 year old
 
 Request Example
 ```
-/search-grant/nill/nil/less5
-```
-
-Parameter
-| Field | Type | Description |
-| --- | --- | --- |
-| household_type | text | Household type (Options: Landed, Condominium, HDB) |
-| annual_income | text | Total household income (e.g. less100000) |
-| children_age | text | Age of children (e.g. less5) |
-
-Response Example
-```
-[
-    {
-        "id": 21,
-        "household_family_id": 5,
-        "member_name": "Emre",
-        "member_gender": "M",
-        "member_marital_status": "Single",
-        "member_spouse": null,
-        "member_occupation_type": "Student",
-        "member_annual_income": null,
-        "member_dob": "2019-12-10T16:00:00.000Z"
-    }
-]
+/search-grant/nil/nil/less5/nil
 ```
 
 
 #### Yolo Grant
+
+Assumption: Only search for family member who is from HDB households with annual income of less than $100,000.
+
 Request Example
 ```
-/search-grant/HDB/less100000
+/search-grant/hdb/less100000/nil/nil
 ```
 
-Parameter
-| Field | Type | Description |
-| --- | --- | --- |
-| household_type | text | Household type (Options: Landed, Condominium, HDB) |
-| annual_income | text | Total household income (e.g. less100000) |
-
-Response Example
-```
-[
-    {
-        "household_family_id": 8,
-        "total_annual_income": "150.00"
-    }
-]
-```
 
 ### Endpoint 6: Delete household - Remove Household and family members
 Method: `DELETE`
