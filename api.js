@@ -125,13 +125,57 @@ app.get('/show-household/:id', (req, res)=>{
 });
 
 //Endpoint 5: Search for households and recipients of grant disbursement
-app.get('/search-grant/:household_type/:annual_income/:member_age', (req, res)=>{
+app.get('/search-grant/:household_type/:annual_income/:member_age/:martial_status', (req, res)=>{
     let searchQuery = '';
     let member_age_operator = '';
     let annual_income_operator = '';
 
     //Student Encouragement Bonus
     //Family Togetherness Scheme
+    if(req.params.household_type == "nil" && req.params.annual_income == "nil" && req.params.member_age !== "nil" && req.params.martial_status !== "nil")
+    {
+        member_age_operator = req.params.member_age.substring(0, 4);
+
+        if(member_age_operator == 'more')
+        {
+            member_age_operator = '<=';
+        }
+        else
+        {
+            member_age_operator = '>=';
+        }
+
+        const member_age = parseFloat(req.params.member_age.substring(4));
+
+        searchQuery = `with a as
+                                (
+                                    select hfm.household_family_id
+                                                        from household_family hf
+                                                        inner join household h
+                                                        on h.id = hf.household_id
+                                                        inner join household_family_member hfm
+                                                        on hf.id = hfm.household_family_id
+                                                        where hfm.member_marital_status = '${req.params.martial_status}'
+                                                        group by hfm.household_family_id
+                                ), b as (
+                                    select hfm.household_family_id
+                                                        from household_family hf
+                                                        inner join household h
+                                                        on h.id = hf.household_id
+                                                        inner join household_family_member hfm
+                                                        on hf.id = hfm.household_family_id
+                                        where hfm.household_family_id = (SELECT household_family_id FROM a )
+                                        and hfm.member_dob${member_age_operator} hfm.member_dob - INTERVAL '${member_age} years'
+                                ) select hfm.*
+                                                        from household_family hf
+                                                        inner join household h
+                                                        on h.id = hf.household_id
+                                                        inner join household_family_member hfm
+                                                        on hf.id = hfm.household_family_id
+                                        where hfm.household_family_id = (SELECT household_family_id FROM b )`;
+    }
+
+
 
     //Elder Bonus (HDB household with family members above the age of 50)
     if(req.params.household_type !== "nil" && req.params.annual_income == "nil" && req.params.member_age !== "nil")
@@ -273,4 +317,4 @@ app.delete('/delete-member/:household_family_id/:household_family_member_id', (r
 
 
 
-app.listen(9200, () => console.log('grant-disbursement api application is running'));
+app.listen(3000, () => console.log('grant-disbursement api application is running'));
