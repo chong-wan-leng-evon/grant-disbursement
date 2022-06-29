@@ -125,7 +125,70 @@ app.get('/show-household/:id', (req, res)=>{
 });
 
 //Endpoint 5: Search for households and recipients of grant disbursement
+app.get('/search-grant/:household_type/:annual_income', (req, res)=>{
+    let searchQuery = '';
 
+    //Student Encouragement Bonus
+    //Family Togetherness Scheme
+    //Elder Bonus
+    //Baby Sunshine Grant
+
+    //YOLO GST Grant
+    if(req.params.household_type !== "nil" && req.params.annual_income !== "nil")
+    {
+        let annual_income_operator = req.params.annual_income.substring(0, 4);
+
+        if(annual_income_operator == 'more')
+        {
+            annual_income_operator = '>';
+        }
+        else
+        {
+            annual_income_operator = '<';
+        }
+
+        const annual_income = parseFloat(req.params.annual_income.substring(4)).toFixed(2);
+
+        searchQuery = `SELECT household_family_id, total_annual_income FROM (
+                            select hfm.household_family_id as household_family_id, sum(hfm.member_annual_income) as total_annual_income
+                                            from household_family hf
+                                            inner join household h
+                                            on h.id = hf.household_id
+                                            inner join household_family_member hfm
+                                            on hf.id = hfm.household_family_id
+                                            where h.household_type = '${req.params.household_type}' 
+                                            group by hfm.household_family_id
+                        ) R
+                        WHERE total_annual_income ${annual_income_operator} ${annual_income};`;
+
+        client.query(searchQuery, (err, result)=>{
+            if(!err){                   
+                res.send(result.rows);
+            }
+            else{ 
+                console.log(err.message) 
+            }
+            })
+        client.end;
+    }
+
+    /*Student Encouragement Bonus
+    - less than 16 years old
+    - income of less than $150,000
+
+    Family Togetherness Scheme
+    - households with husband & wife
+    - child(ren) younger than 18 years old.
+
+    Elder Bonus
+    - above the age of 50
+
+    Baby Sunshine Grant
+    - children younger than 5
+
+    YOLO GST Grant
+    - income of less than $100,000*/
+});
 
 //Endpoint 6: Delete household - Remove Household and family members
 app.delete('/delete-household/:household_family_id', (req, res)=> {
